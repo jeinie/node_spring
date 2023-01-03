@@ -17,4 +17,4 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  # create 로 설정하면, 프로젝트를 실행할 때마 create table 등 새로 만들어진다.
