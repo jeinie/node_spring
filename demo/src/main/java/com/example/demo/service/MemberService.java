@@ -6,6 +6,8 @@ import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +45,15 @@ public class MemberService {
             // 조회 결과가 없다
             return null;
         }
+    }
+
+    public List<MemberDTO> findAll() {
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        // entity -> dto 변환
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        for (MemberEntity memberEntity: memberEntityList) { // dto 리스트를 entity 리스트로 대입하는 것 불가능하므로 하나씩
+            memberDTOList.add(MemberDTO.toMemberDTO(memberEntity));
+        }
+        return memberDTOList;
     }
 }
