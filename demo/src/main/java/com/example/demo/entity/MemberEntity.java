@@ -34,7 +34,7 @@ public class MemberEntity {
 
     public static MemberEntity toUpdateMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setId(memberEntity.getId()); // id 셋팅
+        memberEntity.setId(memberDTO.getId()); // id 셋팅
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberName(memberDTO.getMemberName());

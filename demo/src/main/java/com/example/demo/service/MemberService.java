@@ -28,6 +28,7 @@ public class MemberService {
             2. DB 에서 조회한 비밀번호와 사용자가 입력한 비밀번호(DTO)가 일치하는지 판단
          */
         Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
+        System.out.println("byMemberEmail = " + byMemberEmail.toString());
         if (byMemberEmail.isPresent()) {
             // 조회 결과가 있다 (해당 이메일을 가진 회원정보가 있다)
             MemberEntity memberEntity = byMemberEmail.get(); // Optional 객체의 get() 메서드를 호출해 객체를 가져온다.
