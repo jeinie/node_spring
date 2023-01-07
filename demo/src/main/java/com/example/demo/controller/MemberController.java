@@ -77,7 +77,13 @@ public class MemberController {
     @PostMapping("/member/update")
     public String update(@ModelAttribute MemberDTO memberDTO) {
         memberService.update(memberDTO);
-        // 바로 detail 로 가게 되면 model 에 담아서 가는 과정이 빠지므로
+        // 바로 detail 로 가게 되면 model 에 담아서 가는 과정이 빠지므로 /member 거쳐서 가야 함
         return "redirect:/member/" + memberDTO.getId();
+    }
+
+    @GetMapping("/member/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        memberService.deleteById(id);
+        return "redirect:/member/";
     }
 }
