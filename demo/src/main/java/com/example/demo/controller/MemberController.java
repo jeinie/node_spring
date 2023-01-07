@@ -86,4 +86,10 @@ public class MemberController {
         memberService.deleteById(id);
         return "redirect:/member/";
     }
+
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
 }
