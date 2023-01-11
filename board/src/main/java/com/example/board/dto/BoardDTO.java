@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor // 기본 생성자
+@AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
 public class BoardDTO {
     private Long id;
     private String boardWriter;
@@ -28,8 +28,8 @@ public class BoardDTO {
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
         boardDTO.setBoardContents(boardEntity.getBoardContents());
         boardDTO.setBoardHits(boardEntity.getBoardHits());
-        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
-        boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+//        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
+//        boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
 
         return boardDTO;
     }

@@ -1,9 +1,11 @@
 package com.example.board.entity;
 
+import com.example.board.dto.BoardDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+// DB의 테이블 역할을 하는 클래스
 @Entity
 @Getter
 @Setter
@@ -13,7 +15,7 @@ public class BoardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false) // 크기 20, not null
     private String boardWriter;
 
     @Column // 크기 255, null 가능
@@ -31,4 +33,13 @@ public class BoardEntity {
     @Column
     private int fileAttached; // 1 or 0
 
+    public static BoardEntity toSaveEntity(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardPass(boardDTO.getBoardPass());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(0);
+        return boardEntity;
+    }
 }
