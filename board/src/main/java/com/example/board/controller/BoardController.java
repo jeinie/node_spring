@@ -26,4 +26,12 @@ public class BoardController {
         boardService.save(boardDTO);
         return "index";
     }
+
+    @GetMapping("/")
+    public String findAll(Model model) {
+        // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
+        List<BoardDTO> boardDTOList = boardService.findAll();
+        model.addAttribute("boardList", boardDTOList);
+        return "list";
+    }
 }
