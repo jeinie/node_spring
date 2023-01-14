@@ -61,4 +61,10 @@ public class BoardController {
         return "detail";
 //        return "redirect:/board/" + boardDTO.getId(); // 조회수 영향 받을 수 있으므로 주석 처리
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        boardService.delete(id);
+        return "redirect:/board/";
+    }
 }
