@@ -3,6 +3,9 @@ package com.example.board.controller;
 import com.example.board.dto.BoardDTO;
 import com.example.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,5 +69,29 @@ public class BoardController {
     public String delete(@PathVariable Long id) {
         boardService.delete(id);
         return "redirect:/board/";
+    }
+
+    // /board/paging?page=1
+    @GetMapping("/paging")
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+//        pageable.getPageNumber();
+        Page<BoardDTO> boardList = boardService.paging(pageable);
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ...
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+
+        // page 개수 20개
+        // 현재 사용자가 3페이지라면
+        // 1 2 3
+        // 현재 사용자가 7페이지라면
+        // 7 8 9
+        // 보여지는 페이지 개수 3개
+        // 총 페이지 개수가 8개라면
+        // 7 8 (9는 보이면 안됨)
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "paging";
     }
 }
