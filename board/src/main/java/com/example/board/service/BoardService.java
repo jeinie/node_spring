@@ -47,18 +47,22 @@ public class BoardService {
                 6. board_table 에 해당 데이터 save 처리
                 7. board_file_table 에 해당 데이터 save 처리
              */
-            MultipartFile boardFile = boardDTO.getBoardFile();
-            String originalFilename = boardFile.getOriginalFilename();
-            String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
-            String savePath = "/Users/jangjeong-yun/2022_DC&M/study_spring/img" + storedFileName;
-            boardFile.transferTo(new File(savePath));
+
+            // 부모 데이텀 먼저 저장
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO); // 여기에는 id 값 없음
             Long saveId = boardRepository.save(boardEntity).getId();
             BoardEntity board = boardRepository.findById(saveId).get();
+            for (MultipartFile boardFile: boardDTO.getBoardFile()) {
+//                MultipartFile boardFile = boardDTO.getBoardFile(); // 1.
+                String originalFilename = boardFile.getOriginalFilename(); // 2.
+                String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
+                String savePath = "/Users/jangjeong-yun/2022_DC&M/study_spring/img" + storedFileName; // 4.
+                boardFile.transferTo(new File(savePath)); // 5.
 
-            // BoardFileEntity 객체로 변환해주어야 함
-            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
-            boardFileRepository.save(boardFileEntity);
+                // BoardFileEntity 객체로 변환해주어야 함
+                BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
+                boardFileRepository.save(boardFileEntity);
+            }
         }
     }
 
